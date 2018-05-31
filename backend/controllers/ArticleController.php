@@ -6,6 +6,7 @@ use backend\models\Article;
 use backend\models\ArticleCategory;
 use backend\models\ArticleDetail;
 use yii\data\Pagination;
+use yii\web\NotFoundHttpException;
 
 class ArticleController extends \yii\web\Controller
 {
@@ -42,6 +43,9 @@ class ArticleController extends \yii\web\Controller
     }
     public function actionEdit($id){
         $model_article=Article::findOne(['id'=>$id]);
+        if ($model_article==null){
+            throw new NotFoundHttpException('该文章不存在');
+        }
         $model_detail=ArticleDetail::findOne(['article_id'=>$id]);
         $request=\Yii::$app->request;
         if ($request->isPost){
@@ -83,6 +87,8 @@ class ArticleController extends \yii\web\Controller
             $model->save();
             \Yii::$app->session->setFlash('success', '修改成功!');
             return $this->redirect(['article/index']);
+        }else{
+            throw new NotFoundHttpException('该文章不存在');
         }
     }
 

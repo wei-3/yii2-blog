@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use backend\models\ArticleCategory;
 use yii\data\Pagination;
+use yii\web\NotFoundHttpException;
 
 class ArticleCategoryController extends \yii\web\Controller
 {
@@ -47,6 +48,9 @@ class ArticleCategoryController extends \yii\web\Controller
 
     public function actionEdit($id){
         $model=ArticleCategory::findOne(['id'=>$id]);
+        if ($model==null){
+            throw new NotFoundHttpException('该分类不存在');
+        }
         $request=\Yii::$app->request;
         if ($request->isPost){
             //加载数据

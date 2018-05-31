@@ -2,11 +2,8 @@
 
 namespace backend\models;
 
-use backend\controllers\ArticleCategoryController;
-use backend\controllers\ArticleController;
 use Yii;
 use yii\behaviors\TimestampBehavior;
-use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "article".
@@ -69,8 +66,8 @@ class Article extends \yii\db\ActiveRecord
         return [
             [
                 'class'=>TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_time',// 自己根据数据库字段修改
-                'updatedAtAttribute' => 'updated_time', // 自己根据数据库字段修改,
+                'createdAtAttribute' => 'created_at',// 自己根据数据库字段修改
+                'updatedAtAttribute' => 'updated_at', // 自己根据数据库字段修改,
                 'value'   =>function(){
                         return time();
                 }

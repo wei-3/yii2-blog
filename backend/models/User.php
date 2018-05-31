@@ -3,6 +3,7 @@
 namespace backend\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 use yii\web\IdentityInterface;
 
 /**
@@ -23,6 +24,8 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $password;
+    //常量定义场景
+    const SCENARIO_ADD ='add';
     /**
      * @inheritdoc
      */
@@ -37,10 +40,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'auth_key', 'password_hash', 'email', 'created_at'], 'required'],
+            [['username', 'email','status'], 'required'],
+            ['password', 'required','on'=>self::SCENARIO_ADD],
             [['status', 'created_at', 'updated_at', 'last_login_time'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
+            [['password'], 'string'],
             [['last_login_ip'], 'string', 'max' => 11],
             [['username'], 'unique'],
             [['email'], 'unique'],
@@ -67,6 +72,34 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'last_login_ip' => '最后登录ip',
         ];
     }
+
+
+    //保存之前做的事
+
+    public function beforeSave($insert)
+    {
+        //$insert ，bool 是否是添加
+
+        if ($insert){
+            //添加
+            //密码加密 添加时间 auth_key
+            $this->password_hash=Yii::$app->security->generatePasswordHash($this->password);
+            $this->created_at=time();
+            $this->auth_key=Yii::$app->security->generateRandomString();//随机字符串
+        }else{
+            //修改
+            $this->updated_at=time();
+            if ($this->password){
+                $this->password_hash=Yii::$app->security->generatePasswordHash($this->password);
+            }
+
+        }
+
+
+        return parent::beforeSave($insert); // 必须返回父类方法，该方法必须返回true，save（）方法才会执行
+
+    }
+
 
     /**
      * Finds an identity by the given ID.

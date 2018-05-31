@@ -1,7 +1,7 @@
 
 <nav aria-label="...">
     <ul class="pager">
-        <li class="previous"><a href="<?=\yii\helpers\Url::to(['article-category/index'])?>"><span aria-hidden="true">&larr;</span>&nbsp;返回文章分类 </a></li>
+        <li class="previous"><a href="<?=\yii\helpers\Url::to(['article-category/index'])?>"><span aria-hidden="true">&larr;</span>&nbsp;返回文章分类首页 </a></li>
     </ul>
 </nav>
 <?php

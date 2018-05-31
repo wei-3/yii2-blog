@@ -1,6 +1,6 @@
 <nav aria-label="...">
     <ul class="pager">
-        <li class="previous"><a href="<?=\yii\helpers\Url::to(['article/index'])?>"><span aria-hidden="true">&larr;</span>&nbsp;返回</a></li>
+        <li class="previous"><a href="<?=\yii\helpers\Url::to(['article/index'])?>"><span aria-hidden="true">&larr;</span>&nbsp;返回文章首页</a></li>
     </ul>
 </nav>
 <?php

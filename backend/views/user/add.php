@@ -1,3 +1,8 @@
+<nav aria-label="...">
+    <ul class="pager">
+        <li class="previous"><a href="<?=\yii\helpers\Url::to(['user/index'])?>"><span aria-hidden="true">&larr;</span>&nbsp;返回用户首页</a></li>
+    </ul>
+</nav>
 <?php
 $form=\yii\bootstrap\ActiveForm::begin();
 echo $form->field($model,'username')->textInput();
