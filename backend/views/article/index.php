@@ -9,30 +9,23 @@
 <table class="table table-bordered table-responsive active text-info table-hover table-condensed">
     <tr class="info">
         <th class="text-center">文章ID</th>
-        <th class="text-center">文章作者</th>
         <th class="text-center">文章标题</th>
-        <th class="text-center">文章简介</th>
+        <th class="text-center" style="width: 300px">文章简介</th>
         <th class="text-center">文章分类</th>
-        <th class="text-center">文章点击率</th>
         <th class="text-center">排序</th>
         <th class="text-center">状态</th>
-        <th class="text-center">添加时间</th>
-        <th class="text-center">更新时间</th>
-        <th class="text-center">操作</th>
+        <th class="text-center" style="width: 330px">操作</th>
     </tr>
     <?php foreach ($models as $model):?>
         <tr data-id="<?=$model->id?>">
             <td><?=$model->id?></td>
-            <td><?=$model->author?></td>
             <td><?=$model->title?></td>
             <td><?=$model->intro?></td>
             <td><?=$model->categroy->name?></td>
-            <td><?=$model->click?></td>
             <td><?=$model->sort?></td>
             <td><?=$model->status?'显示':'隐藏'?></td>
-            <td><?=date('Y-m-d H:i:s',$model->created_time)?></td>
-            <td><?=date('Y-m-d H:i:s',$model->updated_time)?></td>
-            <td>
+
+            <td><a href="<?=\yii\helpers\Url::to(['article/detail','id'=>$model->id])?>" class="btn btn-default detail_btn"><span class="glyphicon glyphicon-th-list"></span>文章详情</a>
                 <a href="<?=\yii\helpers\Url::to(['article/edit','id'=>$model->id])?>" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
                 <?php if ($model->status==1):?>
                     <a href="<?=\yii\helpers\Url::to(['article/hide','id'=>$model->id])?>" class="btn btn-default"><span class="glyphicon glyphicon-eye-close"></span>隐藏</a>

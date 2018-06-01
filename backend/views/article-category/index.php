@@ -12,12 +12,12 @@
         <th class="text-center">文章分类名称</th>
         <th class="text-center">排序</th>
         <th class="text-center">状态</th>
-        <th class="text-center">操作</th>
+        <th class="text-center" style="width: 330px">操作</th>
     </tr>
     <?php foreach ($models as $model):?>
         <tr data-id="<?=$model->id?>">
             <td><?=$model->id?></td>
-            <td><?=$model->name?></td>
+            <td class="text-center"><?=$model->name?></td>
             <td><?=$model->sort?></td>
             <td><?=$model->status?'显示':'隐藏'?></td>
             <td>

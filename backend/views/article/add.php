@@ -5,7 +5,6 @@
 </nav>
 <?php
 $form=\yii\bootstrap\ActiveForm::begin();
-echo $form->field($model_article,'author')->textInput();
 echo $form->field($model_article,'title')->textInput();
 echo $form->field($model_article,'intro')->textarea(['rows'=>3]);
 echo $form->field($model_article,'article_category_id')->dropDownList(\yii\helpers\ArrayHelper::map($model_categorys,'id','name'));

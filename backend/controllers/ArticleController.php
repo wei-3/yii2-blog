@@ -92,4 +92,15 @@ class ArticleController extends \yii\web\Controller
         }
     }
 
+    public function actionDetail($id){
+        $model_ar = Article::findOne(['id' => $id]);
+        $model_de = ArticleDetail::findOne(['article_id' => $id]);
+        $url=\Yii::$app->request->referrer;
+        if ($model_ar){
+            return $this->render('detail',['model_ar'=>$model_ar,'model_de'=>$model_de,'url'=>$url]);
+        }else{
+            throw new NotFoundHttpException('该文章不存在');
+        }
+
+    }
 }

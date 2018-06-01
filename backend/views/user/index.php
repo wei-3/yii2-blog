@@ -1,9 +1,4 @@
-<?php
-?>
-<?php
-
-?>
-    <nav aria-label="...">
+   <nav aria-label="...">
         <ul class="pager">
             <li class="previous"><a href="<?=\yii\helpers\Url::to(['user/add'])?>"> 添加用户&nbsp;<span aria-hidden="true">&rarr;</span> </a></li>
         </ul>

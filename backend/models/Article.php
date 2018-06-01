@@ -38,7 +38,7 @@ class Article extends \yii\db\ActiveRecord
         return [
             [['created_time','article_category_id','sort', 'status'], 'integer'],
             [['intro'], 'string'],
-            [['author', 'title'], 'string', 'max' => 10],
+            [ 'title', 'string', 'max' => 10],
         ];
     }
 
@@ -49,7 +49,6 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'author' => '作者',
             'title' => '文章名字',
             'created_time' => '编写时间',
             'updated_time' => '更新时间',
@@ -66,8 +65,8 @@ class Article extends \yii\db\ActiveRecord
         return [
             [
                 'class'=>TimestampBehavior::className(),
-                'createdAtAttribute' => 'created_at',// 自己根据数据库字段修改
-                'updatedAtAttribute' => 'updated_at', // 自己根据数据库字段修改,
+                'createdAtAttribute' => 'created_time',// 自己根据数据库字段修改
+                'updatedAtAttribute' => 'updated_time', // 自己根据数据库字段修改,
                 'value'   =>function(){
                         return time();
                 }
