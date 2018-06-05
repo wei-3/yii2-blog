@@ -183,6 +183,30 @@ class Asserts extends CodeceptionModule
         parent::assertNotRegExp($pattern, $string, $message);
     }
 
+    /**
+     * Checks that a string starts with the given prefix.
+     *
+     * @param string $prefix
+     * @param string $string
+     * @param string $message
+     */
+    public function assertStringStartsWith($prefix, $string, $message = '')
+    {
+        parent::assertStringStartsWith($prefix, $string, $message);
+    }
+
+    /**
+     * Checks that a string doesn't start with the given prefix.
+     *
+     * @param string $prefix
+     * @param string $string
+     * @param string $message
+     */
+    public function assertStringStartsNotWith($prefix, $string, $message = '')
+    {
+        parent::assertStringStartsNotWith($prefix, $string, $message);
+    }
+
 
     /**
      * Checks that variable is empty.
@@ -322,6 +346,19 @@ class Asserts extends CodeceptionModule
     }
 
     /**
+     * Checks that array contains subset.
+     *
+     * @param array  $subset
+     * @param array  $array
+     * @param bool   $strict
+     * @param string $message
+     */
+    public function assertArraySubset($subset, $array, $strict = false, $message = '')
+    {
+        parent::assertArraySubset($subset, $array, $strict, $message);
+    }
+
+    /**
      * @param $expectedCount
      * @param $actual
      * @param $description
@@ -428,8 +465,8 @@ class Asserts extends CodeceptionModule
                 ));
             }
             $this->assertTrue(true); // increment assertion counter
-             return;
+            return;
         }
-        $this->fail("Expected exception to be thrown, but nothing was caught");
+        $this->fail("Expected exception of $class to be thrown, but nothing was caught");
     }
 }
