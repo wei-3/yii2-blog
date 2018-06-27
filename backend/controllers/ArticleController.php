@@ -103,4 +103,20 @@ class ArticleController extends \yii\web\Controller
         }
 
     }
+    public function actionTest(){
+        var_dump(\Yii::getAlias("@webroot"));
+    }
+    public function actions()
+    {
+        return [
+            'upload' => [
+                'class' => 'kucha\ueditor\UEditorAction',
+                'config' =>[
+                    "imageUrlPrefix"  => "",//图片访问路径前缀
+                    "imagePathFormat" => "/upload/image/{yyyy}{mm}{dd}/{time}{rand:6}",
+                    "imageRoot" => \Yii::getAlias("@webroot"),
+                ]
+            ],
+        ];
+    }
 }

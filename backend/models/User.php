@@ -85,6 +85,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             //密码加密 添加时间 auth_key
             $this->password_hash=Yii::$app->security->generatePasswordHash($this->password);
             $this->created_at=time();
+            $this->updated_at=time();
             $this->auth_key=Yii::$app->security->generateRandomString();//随机字符串
         }else{
             //修改
