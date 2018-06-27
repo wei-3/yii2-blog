@@ -109,7 +109,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      * Null should be returned if such an identity cannot be found
      * or the identity is not in an active state (disabled, deleted, etc.)
      */
-    //查找当前对象
+    //根据id查找用户
     public static function findIdentity($id)
     {
         return self::findOne(['id'=>$id]);
@@ -133,7 +133,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      * Returns an ID that can uniquely identify a user identity.
      * @return string|int an ID that uniquely identifies a user identity.
      */
-    //返回用户id  对象的方法（说明已经实例化好了）
+    //返回用户id  对象的方法（说明已经实例化好了）所以用this
     public function getId()
     {
         return $this->id;
