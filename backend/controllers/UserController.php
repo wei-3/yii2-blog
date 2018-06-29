@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use backend\models\LoginFrom;
+use backend\models\ModifyFrom;
 use backend\models\User;
 use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
@@ -107,7 +108,25 @@ class UserController extends \yii\web\Controller
     public function actionLogout(){
         \Yii::$app->user->logout();
         \Yii::$app->session->setFlash('success','退出成功');
-        return $this->redirect('login');
+        return $this->redirect(['login']);
+    }
+
+    //修改自己的密码
+    public function actionPwd(){
+        if (\Yii::$app->user->isGuest){
+            return $this->redirect(['login']);
+        }
+        $model=new ModifyFrom();
+        $request=\Yii::$app->request;
+        if ($request->isPost){
+            $model->load($request->post());
+            if ($model->validate()){
+                $user=\Yii::$app->user->identity;
+                $user->password=$model->new_pwd;//自动加密,在保存之前
+                $user->save();
+            }
+        }
+        return $this->render('pwd',['model'=>$model]);
     }
 
 }
