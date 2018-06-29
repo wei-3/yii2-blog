@@ -6,7 +6,7 @@ class LoginFrom extends Model{
     public $username;
     public $password;
     public $code;
-//    public $remember;
+    public $remember;
 
 
     public function rules()
