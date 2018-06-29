@@ -18,6 +18,7 @@ class RbacController extends Controller{
                 $per->description=$model->desc;
                 //2.保存到数据表
                 $auth->add($per);
+                \Yii::$app->session->setFlash('success','添加权限成功');
                 return $this->redirect(['permission-index']);
             }
         }
