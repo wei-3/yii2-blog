@@ -17,7 +17,8 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'backend\models\User',
+            'loginUrl'=>['user/login'],//登录页面
+            'identityClass' => 'backend\models\User',//登录
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],

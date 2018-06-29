@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\models\LoginFrom;
 use backend\models\User;
 use yii\data\Pagination;
 use yii\web\NotFoundHttpException;
@@ -26,9 +27,13 @@ class UserController extends \yii\web\Controller
         if ($request->isPost){
             $model->load($request->post());
             if ($model->validate()){
-                $model->save();
-                \Yii::$app->session->setFlash('success','添加成功');
-                return $this->redirect(['index']);
+                if ($model->password===$model->confirm_password){
+                    $model->save();
+                    \Yii::$app->session->setFlash('success','添加成功');
+                    return $this->redirect(['index']);
+                }else{
+                    $model->addError('confirm_password','两次密码不一致');
+                }
             }
 
         }
@@ -79,6 +84,30 @@ class UserController extends \yii\web\Controller
         }else{
             throw new NotFoundHttpException('用户不存在');
         }
+    }
+
+    public function actionLogin(){
+        //显示登录表单
+        $model=new LoginFrom();
+        $request=\Yii::$app->request;
+        if ($request->isPost){
+            $model->load($request->post());
+            if ($model->validate()){
+                //认证
+                if ($model->login()){//模型的login
+                    \Yii::$app->session->setFlash('success','登录成功');
+                    return $this->redirect(['user/index']);
+                }
+            }
+        }
+        return $this->render('login',['model'=>$model]);
+    }
+
+    //注销
+    public function actionLogout(){
+        \Yii::$app->user->logout();
+        \Yii::$app->session->setFlash('success','退出成功');
+        return $this->redirect('login');
     }
 
 }

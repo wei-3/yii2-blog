@@ -86,6 +86,9 @@ class ArticleCategoryController extends \yii\web\Controller
             $model->save();
             \Yii::$app->session->setFlash('success','修改成功!');
             return $this->redirect(['article-category/index']);
+        }else{
+            throw new NotFoundHttpException('该文章分类不存在');
         }
     }
+
 }

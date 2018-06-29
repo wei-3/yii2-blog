@@ -24,6 +24,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $password;
+    public $confirm_password;
     //常量定义场景
     const SCENARIO_ADD ='add';
     /**
@@ -41,7 +42,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email','status'], 'required'],
-            ['password', 'required','on'=>self::SCENARIO_ADD],
+            [['password','confirm_password'], 'required','on'=>self::SCENARIO_ADD],
             [['status', 'created_at', 'updated_at', 'last_login_time'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
             [['auth_key'], 'string', 'max' => 32],
@@ -63,6 +64,8 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'username' => '用户名',
             'auth_key' => 'Auth Key',
             'password_hash' => '哈希密码',
+            'password' => '密码',
+            'confirm_password' => '确认密码',
             'password_reset_token' => 'Password Reset Token',
             'email' => '邮箱',
             'status' => '状态',
@@ -153,7 +156,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function getAuthKey()
     {
-        // TODO: Implement getAuthKey() method.
+        return $this->auth_key;
     }
 
     /**
@@ -166,7 +169,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        // TODO: Implement validateAuthKey() method.
+        return $authKey==$this->auth_key;
     }
 
     /**
