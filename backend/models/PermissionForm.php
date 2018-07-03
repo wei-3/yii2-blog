@@ -9,7 +9,7 @@ class PermissionForm extends Model{
     public function rules()
     {
         return [
-            [['name','desc'],'required']
+            [['name','description'],'required']
         ];
     }
 

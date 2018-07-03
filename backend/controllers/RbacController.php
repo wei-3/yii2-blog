@@ -15,17 +15,19 @@ class RbacController extends Controller{
                 //1.创建权限
                 $per=$auth->createPermission($model->name);
                 //权限描述
-                $per->description=$model->desc;
+                $per->description=$model->description;
                 //2.保存到数据表
                 $auth->add($per);
                 \Yii::$app->session->setFlash('success','添加权限成功');
-                return $this->redirect(['permission-index']);
+                return $this->redirect(['index-permission']);
             }
         }
         return $this->render('permission',['model'=>$model]);
     }
 
-    public function actionPerssionIndex(){
-
+    public function actionIndexPermission(){
+        $auth=\Yii::$app->authManager;//本身不支持分页
+        $pers=$auth->getPermissions();
+        return $this->render('permission-index',['pers'=>$pers]);
     }
 }
