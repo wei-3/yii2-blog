@@ -9,8 +9,16 @@ class PermissionForm extends Model{
     public function rules()
     {
         return [
-            [['name','description'],'required']
+            [['name','description'],'required'],
+//            ['name','unique']用它不行，是活动记录用的
+            ['name','validateName']
         ];
+    }
+
+    public function validateName(){
+        if(\Yii::$app->authManager->getPermission($this->name)){
+            $this->addError('name','权限已存在');
+        }
     }
 
     public function attributeLabels()
