@@ -36,27 +36,25 @@ $this->registerJsFile('https://cdn.datatables.net/1.10.19/js/dataTables.bootstra
 $del_url=\yii\helpers\Url::to(['rbac/del-permission']);
 $this->registerJs(new \yii\web\JsExpression(
     <<<JS
-// $(document).ready(function() {
-//          $('#example').DataTable( {
-//              "language": {
-//                  "lengthMenu": "每页 _MENU_ 条记录",
-//                  "zeroRecords": "没有找到记录",
-//                  "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
-//                  "infoEmpty": "无记录",
-//                  "infoFiltered": "(从 _MAX_ 条记录过滤)",
-//                  "search": "搜索：",
-//                  "ZeroRecords": "没有记录",
-//                  "paginate":{
-//                      "next":"下一页",
-//                      "previous":"上一页"
-//                  
-//                  }
-//              }
-//          } );
-//  } );
 $(document).ready(function() {
-    $('#example').DataTable();
-} );
+         $('#example').DataTable( {
+             "language": {
+                 "lengthMenu": "每页 _MENU_ 条记录",
+                 "zeroRecords": "没有找到记录",
+                 "info": "第 _PAGE_ 页 ( 总共 _PAGES_ 页 )",
+                 "infoEmpty": "无记录",
+                 "infoFiltered": "(从 _MAX_ 条记录过滤)",
+                 "search": "搜索：",
+                 "ZeroRecords": "没有记录",
+                 "paginate":{
+                     "next":"下一页",
+                     "previous":"上一页"
+                 
+                 }
+             }
+         } );
+ } );
+
 
        $(".del_btn").click(function() {
           if(confirm('确定要删除吗')){
