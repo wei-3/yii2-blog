@@ -25,7 +25,7 @@ class PermissionForm extends Model{
     {
         return [
             'name'=>'权限名称',
-            'description'=>'权限'
+            'description'=>'权限描述'
         ];
     }
 }

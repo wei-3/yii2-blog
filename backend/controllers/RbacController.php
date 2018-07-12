@@ -55,13 +55,19 @@ class RbacController extends Controller{
                         $auth->addChild($role,$permission);//角色 分配 权限(传对象)
                     }
                 }
-                return $this->redirect(['role-index']);
+                return $this->redirect(['index-role']);
             }
         }
         return $this->render('role',['model'=>$model]);
 
     }
 
+    //角色列表
+    public function actionIndexRole(){
+        $auth=\Yii::$app->authManager;
+        $roles=$auth->getRoles();
+        return $this->render('role-index',['roles'=>$roles]);
+    }
 
 
 }

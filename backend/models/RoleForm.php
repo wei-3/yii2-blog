@@ -12,7 +12,16 @@ class RoleForm extends Model{
     {
         return [
             [['name','description'],'required'],
-            ['permissions','safe']
+            ['permissions','safe'],
+            ['name','validateName']
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'name'=>'角色名称',
+            'description'=>'角色描述'
         ];
     }
 
@@ -29,4 +38,12 @@ class RoleForm extends Model{
         $items=ArrayHelper::map($permissions,'name','description');
         return $items;
     }
+
+    public function validateName(){
+        if(\Yii::$app->authManager->getRole($this->name)){
+            $this->addError('name','权限已存在');
+        }
+    }
+
+
 }
