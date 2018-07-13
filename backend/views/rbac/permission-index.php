@@ -65,8 +65,10 @@ $(document).ready(function() {
                      tr.fadeToggle();
                      alert('删除成功');
                 }
-                else{
+                else if(data=='fail'){
                     alert('删除失败');
+                }else {
+                    alert(data);
                 }
              
               });

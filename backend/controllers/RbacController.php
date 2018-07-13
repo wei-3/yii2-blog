@@ -2,6 +2,7 @@
 namespace backend\controllers;
 use backend\models\PermissionForm;
 use backend\models\RoleForm;
+use yii\db\Query;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -68,11 +69,21 @@ class RbacController extends Controller{
 
     //删除权限
     public function actionDelPermission(){
-        $name='act';
+        $name='dd';
         //根据$name找到权限
         $name_permission=\Yii::$app->authManager->getPermission($name);
-//        $role=\Yii::$app->authManager->
+//        $db=\Yii::$app->db;
+//        $sql='select * from auth_item_child';
+//        $result=$db->createCommand($sql)->queryAll();
+//        var_dump($result);exit();
         if($name_permission){
+            $query=new Query();
+            $result=$query->select('*')->from('auth_item_child')->all();
+            foreach ($result as $k=>$v){
+                if (in_array($name,$v)){
+                    return '该权限已绑定,请先解绑';
+                }
+            }
             //移除权限
             \Yii::$app->authManager->remove($name_permission);
             return 'success';
