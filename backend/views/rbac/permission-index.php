@@ -60,15 +60,15 @@ $(document).ready(function() {
           if(confirm('确定要删除吗')){
               var tr=$(this).closest('tr');
               var id=tr.attr('data-id');
-              // console.log(id);
-              $.post("{$del_url}",{id:id},function(data) {
+              $.post("{$del_url}",{name:id},function(data) {
                 if(data=='success'){
                      tr.fadeToggle();
                      alert('删除成功');
                 }
                 else{
-                     alert('删除失败');
+                    alert('删除失败');
                 }
+             
               });
           }
         });

@@ -66,6 +66,22 @@ class RbacController extends Controller{
 
     }
 
+    //删除权限
+    public function actionDelPermission(){
+        $name='act';
+        //根据$name找到权限
+        $name_permission=\Yii::$app->authManager->getPermission($name);
+//        $role=\Yii::$app->authManager->
+        if($name_permission){
+            //移除权限
+            \Yii::$app->authManager->remove($name_permission);
+            return 'success';
+        }else{
+            return 'fail';
+        }
+
+    }
+
     //角色列表
     public function actionIndexRole(){
         $auth=\Yii::$app->authManager;
