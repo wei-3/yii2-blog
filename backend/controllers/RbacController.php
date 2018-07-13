@@ -158,4 +158,25 @@ class RbacController extends Controller{
 
     }
 
+    public function actionDelRole(){
+        $auth=\Yii::$app->authManager;
+        $name=\Yii::$app->request->post('id');
+        //获取当前角色
+        $role=$auth->getRole($name);
+        if ($role){
+            //获取该角色的权限
+            $permissions=$auth->getPermissionsByRole($name);
+            //先判断当前角色是否有权限
+            if($permissions){
+                $auth->removeChildren($role);
+            }
+            $auth->remove($role);
+            return 'success';
+        }else{
+            return 'fail';
+        }
+
+
+    }
+
 }
