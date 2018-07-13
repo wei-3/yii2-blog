@@ -7,15 +7,27 @@ class RoleForm extends Model{
     public $name;
     public $description;
     public $permissions;
+    const SCENARIO_EDITROLE ='edit-role';
+    const SCENARIO_ADDROLE ='add-role';
 
     public function rules()
     {
         return [
             [['name','description'],'required'],
             ['permissions','safe'],
-//            ['name','validateName']
+            ['name','validateName','on'=>self::SCENARIO_ADDROLE],
+            ['name','validateEditName','on'=>self::SCENARIO_EDITROLE]
         ];
     }
+     //必须定义场景
+    //第一种是规则里用on
+    //第二种定义方法(如果定义的场景在rule中没有配置，需要通过scenarios方法声明，否则会提示场景不存在)
+//    public function scenarios()
+//    {
+//        return [
+//            self::SCENARIO_EDITROLE=>[],//指定该场景下需要验证哪些字段（空数组表示所有字段）
+//        ];
+//    }
 
     public function attributeLabels()
     {
@@ -39,7 +51,22 @@ class RoleForm extends Model{
         return $items;
     }
 
+    public function validateName(){
+        $auth=\Yii::$app->authManager;
+        if($auth->getRole($this->name)){
+                $this->addError('name','该角色已存在');
+        }
+    }
 
-
+    public function validateEditName(){
+        $auth=\Yii::$app->authManager;
+        //情况：一 没有修改名称(不管) 二 修改了名称，新名称不能存在
+        //怎么判断名称修改没有 通过get参数获取旧名称
+        if(\Yii::$app->request->get('name')!=$this->name){
+            if($auth->getRole($this->name)){
+                $this->addError('name','该角色已存在');
+            }
+        }
+    }
 
 }

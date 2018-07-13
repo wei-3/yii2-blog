@@ -37,6 +37,7 @@ class RbacController extends Controller{
     //添加角色，并赋权限
     public function actionAddRole(){
         $model=new RoleForm();
+        $model->scenario=RoleForm::SCENARIO_ADDROLE;
         $request=\Yii::$app->request;
         if ($request->isPost){
             $model->load($request->post());
@@ -90,6 +91,7 @@ class RbacController extends Controller{
         $model=new RoleForm();
         //使用模型修改时不能回显，能回显是因为视图的模型字段有值才回显
         //调用视图，分配数据
+        $model->scenario=RoleForm::SCENARIO_EDITROLE;//指定场景
         $model->name=$role->name;
         $model->description=$role->description;
         if (!empty($permissions)){
