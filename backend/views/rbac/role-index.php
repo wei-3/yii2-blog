@@ -33,7 +33,7 @@ $this->registerCssFile('https://cdn.datatables.net/1.10.19/css/dataTables.bootst
 $this->registerJsFile('https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',['depends'=>\yii\web\JqueryAsset::className()]);
 $this->registerJsFile('https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap.min.js',['depends'=>\yii\web\JqueryAsset::className()]);
 //注册js代码
-$del_url=\yii\helpers\Url::to(['rbac/del-permission']);
+$del_url=\yii\helpers\Url::to(['rbac/del-role']);
 $this->registerJs(new \yii\web\JsExpression(
     <<<JS
 $(document).ready(function() {
@@ -60,15 +60,17 @@ $(document).ready(function() {
           if(confirm('确定要删除吗')){
               var tr=$(this).closest('tr');
               var id=tr.attr('data-id');
-              // console.log(id);
-              $.post("{$del_url}",{id:id},function(data) {
+              $.post("{$del_url}",{name:id},function(data) {
                 if(data=='success'){
                      tr.fadeToggle();
                      alert('删除成功');
                 }
-                else{
-                     alert('删除失败');
+                else if(data=='fail'){
+                    alert('删除失败');
+                }else {
+                    alert(data);
                 }
+             
               });
           }
         });

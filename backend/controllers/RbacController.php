@@ -69,7 +69,7 @@ class RbacController extends Controller{
 
     //删除权限
     public function actionDelPermission(){
-        $name='dd';
+        $name=\Yii::$app->request->post('name');
         //根据$name找到权限
         $name_permission=\Yii::$app->authManager->getPermission($name);
 //        $db=\Yii::$app->db;
@@ -160,7 +160,8 @@ class RbacController extends Controller{
 
     public function actionDelRole(){
         $auth=\Yii::$app->authManager;
-        $name=\Yii::$app->request->post('id');
+        $name=\Yii::$app->request->post('name');
+//        var_dump($name);exit();
         //获取当前角色
         $role=$auth->getRole($name);
         if ($role){
@@ -175,8 +176,6 @@ class RbacController extends Controller{
         }else{
             return 'fail';
         }
-
-
     }
 
 }
