@@ -13,7 +13,7 @@ class RoleForm extends Model{
         return [
             [['name','description'],'required'],
             ['permissions','safe'],
-            ['name','validateName']
+//            ['name','validateName']
         ];
     }
 
@@ -39,11 +39,7 @@ class RoleForm extends Model{
         return $items;
     }
 
-    public function validateName(){
-        if(\Yii::$app->authManager->getRole($this->name)){
-            $this->addError('name','权限已存在');
-        }
-    }
+
 
 
 }

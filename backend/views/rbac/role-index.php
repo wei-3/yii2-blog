@@ -19,7 +19,7 @@
             <td><?=$role->name?></td>
             <td><?=$role->description?></td>
             <td>
-                <a href="<?=\yii\helpers\Url::to(['rbac/edit-permission','name'=>$role->name])?>" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
+                <a href="<?=\yii\helpers\Url::to(['rbac/edit-role','name'=>$role->name])?>" class="btn btn-default"><span class="glyphicon glyphicon-pencil"></span>编辑</a>
                 <a href="javascript:;" class="btn btn-default del_btn"><span class="glyphicon glyphicon-eye-close"></span>删除</a>
             </td>
         </tr>
