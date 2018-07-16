@@ -1,15 +1,11 @@
 <?php
 ?>
-<nav aria-label="...">
-    <ul class="pager">
-        <li class="previous"><a href="<?=\yii\helpers\Url::to(['rbac/add-role'])?>"> 添加角色&nbsp;<span aria-hidden="true">&rarr;</span> </a></li>
-    </ul>
-</nav>
-<table class="table table-bordered table-responsive active text-info table-hover table-condensed">
-    <tr class="info">
-        <th class="text-center">名称</th>
-        <th class="text-center">路由</th>
-        <th class="text-center">排序</th>
+<h2>菜单列表</h2>
+<table class="table">
+    <tr>
+        <th>名称</th>
+        <th>路由</th>
+        <th>排序</th>
     </tr>
     <?php foreach ($models as $model):?>
         <tr data-id="<?=$model->id?>">
@@ -19,3 +15,7 @@
         </tr>
     <?php endforeach;?>
 </table>
+<?php
+echo \yii\widgets\LinkPager::widget([
+    'pagination'=>$pager,
+]);
