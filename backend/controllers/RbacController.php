@@ -10,6 +10,7 @@ class RbacController extends Controller{
     //添加权限
     public function actionAddPermission(){
         $model =new PermissionForm();
+//        $model->scenario=PermissionForm::SCENARIO_ADDPERMISSION;
         $request=\Yii::$app->request;
         if ($request->isPost){
             $model->load($request->post());
@@ -35,6 +36,59 @@ class RbacController extends Controller{
         return $this->render('permission-index',['pers'=>$pers]);
     }
 
+    //修改权限
+    public function actionEditPermission($name){
+        $auth=\Yii::$app->authManager;
+        $name_permission=$auth->getPermission($name);
+        if($name_permission==null){
+            throw new NotFoundHttpException('权限不存在');
+        }
+        $model=new PermissionForm();
+        $model->scenario=PermissionForm::SCENARIO_EDITPERMISSION;
+        //给表单赋值并回显
+        $model->name=$name_permission->name;
+        $model->description=$name_permission->description;
+        $request=\Yii::$app->request;
+        if ($request->isPost){
+            $model->load($request->post());
+            if ($model->validate()){
+                $auth=\Yii::$app->authManager;
+                $name_permission->name=$model->name;
+                $name_permission->description=$model->description;
+                //根据穿过来的$name保存修改
+                $auth->update($name,$name_permission);
+                \Yii::$app->session->setFlash('success','修改权限成功!');
+                return $this->redirect(['rbac/index-permission']);
+            }
+        }
+        return $this->render('permission',['model'=>$model]);
+    }
+
+    //删除权限
+    public function actionDelPermission(){
+        $name=\Yii::$app->request->post('name');
+        //根据$name找到权限
+        $name_permission=\Yii::$app->authManager->getPermission($name);
+//        $db=\Yii::$app->db;
+//        $sql='select * from auth_item_child';
+//        $result=$db->createCommand($sql)->queryAll();
+//        var_dump($result);exit();
+        if($name_permission){
+            $query=new Query();
+            $result=$query->select('*')->from('auth_item_child')->all();
+            foreach ($result as $k=>$v){
+                if (in_array($name,$v)){
+                    return '该权限已绑定,请先解绑';
+                }
+            }
+            //移除权限
+            \Yii::$app->authManager->remove($name_permission);
+            return 'success';
+        }else{
+            return 'fail';
+        }
+
+    }
     //添加角色，并赋权限
     public function actionAddRole(){
         $model=new RoleForm();
@@ -64,32 +118,6 @@ class RbacController extends Controller{
             }
         }
         return $this->render('role',['model'=>$model]);
-
-    }
-
-    //删除权限
-    public function actionDelPermission(){
-        $name=\Yii::$app->request->post('name');
-        //根据$name找到权限
-        $name_permission=\Yii::$app->authManager->getPermission($name);
-//        $db=\Yii::$app->db;
-//        $sql='select * from auth_item_child';
-//        $result=$db->createCommand($sql)->queryAll();
-//        var_dump($result);exit();
-        if($name_permission){
-            $query=new Query();
-            $result=$query->select('*')->from('auth_item_child')->all();
-            foreach ($result as $k=>$v){
-                if (in_array($name,$v)){
-                    return '该权限已绑定,请先解绑';
-                }
-            }
-            //移除权限
-            \Yii::$app->authManager->remove($name_permission);
-            return 'success';
-        }else{
-            return 'fail';
-        }
 
     }
 
