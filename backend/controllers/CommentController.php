@@ -14,22 +14,22 @@ class CommentController extends \yii\web\Controller
         $query=Comment::find();
         $pager=new Pagination([
             'totalCount'=>$query->count(),
-            'defaultPageSize'=>1,
+            'defaultPageSize'=>100,
         ]);
         $models=$query->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render('index',['models'=>$models,'pager'=>$pager]);
     }
 
     public function actionAdd(){
-        $model_co=new Comment();
+        $model=new Comment();
         $request=\Yii::$app->request;
 //        var_dump($request);exit();
         if($request->isPost){
 //            var_dump($request->post());exit();
-            $model_co->load($request->post());
-            $model_co->createtime=time();
-            if ($model_co->validate()){
-                $model_co->save();
+            $model->load($request->post());
+            $model->created_at=time();
+            if ($model->validate()){
+                $model->save();
                 \Yii::$app->session->setFlash('success','添加成功!');
                 return $this->redirect(['comment/index']);
             }else{
@@ -37,13 +37,34 @@ class CommentController extends \yii\web\Controller
             }
         }
         $model_ac=Article::find()->all();
-        return $this->render('add',['model_co'=>$model_co,'model_ac'=>$model_ac]);
+        return $this->render('add',['model'=>$model,'model_ac'=>$model_ac]);
     }
 
-    public function actionEdit(){}
+    public function actionEdit($id){
+        $model=Comment::findOne(['id'=>$id]);
+        $request=\Yii::$app->request;
+        if($request->isPost){
+            $model->load($request->post());
+            if($model->validate()){
+                $model->save();
+                \Yii::$app->session->setFlash('success','修改成功!');
+                return $this->redirect(['comment/index']);
+            }
+        }
+        $model_ac=Article::find()->all();
+        return $this->render('add',['model'=>$model,'model_ac'=>$model_ac]);
+    }
 
-    public function actionDel(){}
+    public function actionDel(){
+        $id=\Yii::$app->request->post('id');
+        $model=Comment::findOne(['id'=>$id]);
+        if ($model){
+            $model->delete();
+            return 'success';
+        }else{
+            return 'fail';
+        }
+    }
 
-    public function actionHide(){}
 
 }
