@@ -1,5 +1,6 @@
 <?php
 namespace backend\controllers;
+use backend\filters\RbacFilter;
 use backend\models\PermissionForm;
 use backend\models\RoleForm;
 use yii\db\Query;
@@ -204,6 +205,16 @@ class RbacController extends Controller{
         }else{
             return 'fail';
         }
+    }
+
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['error']
+            ]
+        ];
     }
 
 }

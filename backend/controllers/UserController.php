@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\LoginFrom;
 use backend\models\ModifyFrom;
 use backend\models\User;
@@ -127,6 +128,16 @@ class UserController extends \yii\web\Controller
             }
         }
         return $this->render('pwd',['model'=>$model]);
+    }
+
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['logout','login','captcha','pwd','error']
+            ]
+        ];
     }
 
 }

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Article;
 use backend\models\Comment;
 use yii\data\Pagination;
@@ -65,6 +66,14 @@ class CommentController extends \yii\web\Controller
             return 'fail';
         }
     }
-
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['error']
+            ]
+        ];
+    }
 
 }

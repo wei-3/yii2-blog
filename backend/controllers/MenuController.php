@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Menu;
 use yii\data\Pagination;
 
@@ -65,5 +66,15 @@ class MenuController extends \yii\web\Controller
                 return 'success';
             }
         }
+    }
+
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['error']
+            ]
+        ];
     }
 }

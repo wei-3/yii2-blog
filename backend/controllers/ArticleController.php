@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use backend\filters\RbacFilter;
 use backend\models\Article;
 use backend\models\ArticleCategory;
 use backend\models\ArticleDetail;
@@ -117,6 +118,16 @@ class ArticleController extends \yii\web\Controller
                     "imageRoot" => \Yii::getAlias("@webroot"),
                 ]
             ],
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['error']
+            ]
         ];
     }
 }
