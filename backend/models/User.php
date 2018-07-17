@@ -123,12 +123,18 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             $children=Menu::find()->where(['parent_id'=>$menu->id])->all();
             $items=[];
             foreach ($children as $child){
-                $items[]=['label'=>$child->name,'url'=>[$child->url]];
+                //判断当前用户是否有该路由的权限
+                if (Yii::$app->user->can($child->url)){
+                    $items[]=['label'=>$child->name,'url'=>[$child->url]];
+                }
+
             }
 //            $items=[
 //                ['label'=>'添加用户','url'=>'user/add']
 //            ];
-            $menuItems[]=['label'=>$menu->name,'items'=>$items];
+            if (!empty($items)){
+                $menuItems[]=['label'=>$menu->name,'items'=>$items];
+            }
         }
         return $menuItems;
     }
