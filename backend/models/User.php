@@ -104,6 +104,35 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
 
     }
 
+    public function getMenus(){
+//        在视图中layouts的main.php可以演示
+        //        最原始数据(从数据库中查)
+//        ['id'=>1,'name'=>'用户管理','parent_id'=>0,'sort'=>1,'url'=>''],
+//        ['id'=>2,'name'=>'添加用户','parent_id=>1','sort'=>1,'url'=>'user/add'],
+//        ['id'=>3,'name'=>'修改用户','parent_id=>1','sort'=>1,'url'=>'user/edit'],
+//        需转换成以下
+//        ['label'=>'用户管理',items=>[
+//            ['label'=>'添加用户','url'=>'user/add']
+//            ['label'=>'修改用户','url'=>'user/edit']
+//        ]]
+        $menuItems=[];
+        //获取所有一级菜单
+        $menus=Menu::find()->where(['parent_id'=>0])->all();
+        foreach ($menus as $menu){
+            //获取一级菜单的所有子菜单
+            $children=Menu::find()->where(['parent_id'=>$menu->id])->all();
+            $items=[];
+            foreach ($children as $child){
+                $items[]=['label'=>$child->name,'url'=>[$child->url]];
+            }
+//            $items=[
+//                ['label'=>'添加用户','url'=>'user/add']
+//            ];
+            $menuItems[]=['label'=>$menu->name,'items'=>$items];
+        }
+        return $menuItems;
+    }
+
 
     /**
      * Finds an identity by the given ID.
