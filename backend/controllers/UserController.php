@@ -16,14 +16,16 @@ class UserController extends \yii\web\Controller
         $query=User::find();
         $pager=new Pagination([
            'totalCount'=>$query->count(),
-            'defaultPageSize'=>1,
+            'defaultPageSize'=>100,
         ]);
         $models=$query->offset($pager->offset)->limit($pager->limit)->all();
+//        var_dump($models);exit();
         return $this->render('index',['models'=>$models,'pager'=>$pager]);
     }
 
     public function actionAdd(){
         $model=new User();
+        $auth=\Yii::$app->authManager;
         $model->scenario=User::SCENARIO_ADD;//指定当前场景
         $request=\Yii::$app->request;
         if ($request->isPost){
@@ -31,6 +33,13 @@ class UserController extends \yii\web\Controller
             if ($model->validate()){
                 if ($model->password===$model->confirm_password){
                     $model->save();
+                    $id=\Yii::$app->db->getLastInsertID();
+                    if ($model->roles){
+                        foreach ($model->roles as $roleName){
+                            $role=$auth->getRole($roleName);
+                            $auth->assign($role,$id);
+                        }
+                    }
                     \Yii::$app->session->setFlash('success','添加成功');
                     return $this->redirect(['index']);
                 }else{
@@ -45,6 +54,9 @@ class UserController extends \yii\web\Controller
 
     public function actionEdit($id){
         $model=User::findOne(['id'=>$id]);
+        $auth=\Yii::$app->authManager;
+        $roles=$auth->getRolesByUser($id);
+        $model->roles=array_keys($roles);
         //为了防止恶意修改传过来的id
         if ($model==null){
             throw new NotFoundHttpException('用户不存在');
@@ -54,6 +66,14 @@ class UserController extends \yii\web\Controller
             $model->load($request->post());
             if ($model->validate()){
                 $model->save();
+                $auth->revokeAll($id);
+                if($model->roles){
+//                    var_dump(111);
+                    foreach ($model->roles as $roleName){
+                        $role=$auth->getRole($roleName);
+                        $auth->assign($role,$id);
+                    }
+                }
                 \Yii::$app->session->setFlash('success','修改成功');
                 return $this->redirect(['index']);
             }

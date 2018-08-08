@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -27,6 +28,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public $confirm_password;
     //常量定义场景
     const SCENARIO_ADD ='add';
+    public $roles;
     /**
      * @inheritdoc
      */
@@ -42,6 +44,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'email','status'], 'required'],
+            ['roles','safe'],
             [['password','confirm_password'], 'required','on'=>self::SCENARIO_ADD],
             [['status', 'created_at', 'updated_at', 'last_login_time'], 'integer'],
             [['username', 'password_hash', 'password_reset_token', 'email'], 'string', 'max' => 255],
@@ -66,6 +69,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
             'password_hash' => '哈希密码',
             'password' => '密码',
             'confirm_password' => '确认密码',
+            'roles'=>'角色',
             'password_reset_token' => 'Password Reset Token',
             'email' => '邮箱',
             'status' => '状态',
@@ -103,7 +107,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
         return parent::beforeSave($insert); // 必须返回父类方法，该方法必须返回true，save（）方法才会执行
 
     }
-
+    //获取角色
+    public static function getRole(){
+        $roles=Yii::$app->authManager->getRoles();
+        $items=ArrayHelper::map($roles,'name','description');
+        return $items;
+    }
     public function getMenus(){
 //        在视图中layouts的main.php可以演示
         //        最原始数据(从数据库中查)

@@ -9,7 +9,7 @@
             <th class="text-center">用户名</th>
             <th class="text-center">邮箱</th>
             <th class="text-center">状态</th>
-            <th class="text-center">添加时间</th>
+            <th class="text-center">角色</th>
             <th class="text-center">更新时间</th>
             <th class="text-center">最后登录时间</th>
             <th class="text-center">最后登录ip</th>
@@ -21,7 +21,12 @@
                 <td><?=$model->username?></td>
                 <td><?=$model->email?></td>
                 <td><?=$model->status?'启用':'禁用'?></td>
-                <td><?=date('Y-m-d H:i:s',$model->created_at)?></td>
+                <td><?php $auth=Yii::$app->authManager;
+                $roles=array_keys($auth->getAssignments($model->id));
+                for ($i=0;$i<count($roles);$i++){
+                    echo $roles[$i];
+                    echo " ";
+                }?></td>
                 <td><?=date('Y-m-d H:i:s',$model->updated_at)?></td>
                 <td><?=$model->last_login_time?></td>
                 <td><?=$model->last_login_ip?></td>

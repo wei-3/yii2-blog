@@ -186,7 +186,7 @@ class RbacController extends Controller{
         return $this->render('role',['model'=>$model]);
 
     }
-
+//删除角色
     public function actionDelRole(){
         $auth=\Yii::$app->authManager;
         $name=\Yii::$app->request->post('name');
@@ -207,14 +207,15 @@ class RbacController extends Controller{
         }
     }
 
-    public function behaviors()
-    {
-        return [
-            'rbac'=>[
-                'class'=>RbacFilter::className(),
-                'except'=>['error']
-            ]
-        ];
-    }
+
+//    public function behaviors()
+//    {
+//        return [
+//            'rbac'=>[
+//                'class'=>RbacFilter::className(),
+//                'except'=>['error']
+//            ]
+//        ];
+//    }
 
 }
