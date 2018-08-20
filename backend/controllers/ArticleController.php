@@ -15,9 +15,31 @@ class ArticleController extends \yii\web\Controller
     public function actionIndex()
     {
         $query=Article::find();
+        $search=\Yii::$app->request->get('search');
+        if (count($search)>0){
+            if (!empty($search['status'])){
+                if ($search['status']=='显示'){
+                    $search['status']=1;
+                }elseif ($search['text']=='隐藏'){
+                    $search['status']=0;
+                }
+                $query=$query->andWhere(['=','status',$search['status']]);
+            }
+            if (!empty($search['text'])){
+                $query=$query->andwhere([
+                    'or',
+                    ['like','title',$search['text']],
+                    ['like','intro',$search['text']],
+                ]);
+            }
+            if (!empty($search['categroy'])){
+                $query=$query->leftJoin('article_category','article.id=article_category_id')->andWhere(['=','name',$search['categroy']]);
+            }
+        }
+//        var_dump($search);exit();
         $pager=new Pagination([
            'totalCount'=>$query->count(),
-            'defaultPageSize'=>1,
+            'defaultPageSize'=>100,
         ]);
         $models=$query->offset($pager->offset)->limit($pager->limit)->all();
         return $this->render('index',['models'=>$models,'pager'=>$pager]);

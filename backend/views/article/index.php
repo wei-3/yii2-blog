@@ -1,11 +1,26 @@
 <?php
-
 ?>
-<nav aria-label="...">
-    <ul class="pager">
-        <li class="previous"><a href="<?=\yii\helpers\Url::to(['article/add'])?>"> 添加文章&nbsp;<span aria-hidden="true">&rarr;</span> </a></li>
-    </ul>
-</nav>
+    <nav class="navbar ">
+        <div class="container-fluid">
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="pager nav navbar-nav">
+                    <li class="previous"><a href="<?=\yii\helpers\Url::to(['article/add'])?>"> 添加文章&nbsp;<span aria-hidden="true">&rarr;</span> </a></li>
+                </ul>
+                <form class="navbar-form navbar-right" action="<?=\yii\helpers\Url::to(['article/index'])?>"  method="get">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search title intro" name="search[text]">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search categroy" name="search[categroy]">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search status" name="search[status]">
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div><!-- /.navbar-collapse -->
+        </div><!-- /.container-fluid -->
+    </nav>
 <table class="table table-bordered table-responsive active text-info table-hover table-condensed">
     <tr class="info">
         <th class="text-center">文章ID</th>
