@@ -48,7 +48,7 @@
     <div class="blogs">
         <?php foreach ($articles as $article): ?>
         <li>
-            <h3 class="blogtitle"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>"><?=$article->title?></a></h3>
+            <h3 class="blogtitle" style="height: 40px"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>"><?=$article->title?></a></h3>
             <div class="bloginfo">
                 <p><?=$article->intro?></p>
             </div>
@@ -56,7 +56,7 @@
         </li>
         <?php endforeach;?>
     </div>
-    <div style="width: 300px;height:0px;margin: 0px">
+    <div style="width: 300px;height:0px;margin-top: -4px;">
         <?php echo \yii\widgets\LinkPager::widget([
             'pagination'=>$pager,
             'maxButtonCount' => 5,
@@ -64,12 +64,9 @@
         ?>
     </div>
     <div class="sidebar">
-        <div class="about">
-            <div class="avatar"> <img src="/images/avatar.gif" alt=""> </div>
-        </div>
-        <div class="search">
+        <div class="search" style="margin-top: 58px">
             <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-                <input name="keyboard" id="keyboard" class="input_text" value="请输入关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+                <input name="keyboard" id="keyboard" class="input_text" value="请输入文章关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入文章关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
                 <input name="show" value="title" type="hidden">
                 <input name="tempid" value="1" type="hidden">
                 <input name="tbname" value="news" type="hidden">
@@ -77,37 +74,24 @@
             </form>
         </div>
         <div class="paihang">
-            <h2 class="hometitle">点击排行</h2>
+            <h2 class="hometitle"">点击排行</h2>
+            <?php foreach ($sort_clicks as $sort_click):?>
             <ul>
-                <li><b><a href="/download/div/2015-04-10/746.html" target="_blank">【活动作品】柠檬绿兔小白个人博客模板30...</a></b>
-                    <p><i><img src="images/t02.jpg"></i>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标...</p>
-                </li>
-                <li><b><a href="/download/div/2014-02-19/649.html" target="_blank"> 个人博客模板（2014草根寻梦）30...</a></b>
-                    <p><i><img src="images/b03.jpg"></i>2014第一版《草根寻梦》个人博客模板简单、优雅、稳重、大气、低调。专为年轻有志向却又低调的草根站长设...</p>
-                </li>
-                <li><b><a href="/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴html5个人博客模板30...</a></b>
-                    <p><i><img src="images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
-                <li><b><a href="/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴html5个人博客模板30...</a></b>
-                    <p><i><img src="images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
+                <li><b style="margin-bottom: 10px">&nbsp;&nbsp;<a href="/download/div/2015-04-10/746.html" target="_blank"><?=$sort_click->title?></a></b></li>
+            </ul>
+            <?php endforeach;?>
+        </div>
+        <div class="cloud">
+            <h2 class="hometitle">标签云</h2>
+            <ul>
+                <a href="https://www.aliyun.com/">阿里云</a> <a href="https://www.oneplus.com/cn/">一加手机</a><a href="/">SumSung</a> <a href="/">青春</a> <a href="/">温暖</a> <a href="/">阳光</a> <a href="/">加油</a><a href="http://www.w3school.com.cn/php/">PHP</a> <a href="https://www.yiichina.com/">yii2</a> <a href="/">docker</a> <a href="https://www.kancloud.cn/manual/thinkphp5/">thinkphp</a> <a href="/">apidoc</a>
             </ul>
         </div>
-        <div class="paihang">
-            <h2 class="hometitle">站长推荐</h2>
+
+        <div class="weixin">
+            <h2 class="hometitle">官方微信</h2>
             <ul>
-                <li><b><a href="/download/div/2015-04-10/746.html" target="_blank">【活动作品】柠檬绿兔小白个人博客模板30...</a></b>
-                    <p><i><img src="images/t02.jpg"></i>展示的是首页html，博客页面布局格式简单，没有复杂的背景，色彩局部点缀，动态的幻灯片展示，切换卡，标...</p>
-                </li>
-                <li><b><a href="/download/div/2014-02-19/649.html" target="_blank"> 个人博客模板（2014草根寻梦）30...</a></b>
-                    <p><i><img src="images/b03.jpg"></i>2014第一版《草根寻梦》个人博客模板简单、优雅、稳重、大气、低调。专为年轻有志向却又低调的草根站长设...</p>
-                </li>
-                <li><b><a href="/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴html5个人博客模板30...</a></b>
-                    <p><i><img src="images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
-                <li><b><a href="/download/div/2013-08-08/571.html" target="_blank">黑色质感时间轴html5个人博客模板30...</a></b>
-                    <p><i><img src="images/b04.jpg"></i>黑色时间轴html5个人博客模板颜色以黑色为主色，添加了彩色作为网页的一个亮点，导航高亮显示、banner图片...</p>
-                </li>
+                <img src="/images/gz.jpg">
             </ul>
         </div>
 </article>
