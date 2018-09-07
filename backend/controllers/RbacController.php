@@ -206,16 +206,15 @@ class RbacController extends Controller{
             return 'fail';
         }
     }
-
-
-//    public function behaviors()
-//    {
-//        return [
-//            'rbac'=>[
-//                'class'=>RbacFilter::className(),
-//                'except'=>['error']
-//            ]
-//        ];
-//    }
+    
+    public function behaviors()
+    {
+        return [
+            'rbac'=>[
+                'class'=>RbacFilter::className(),
+                'except'=>['error']
+            ]
+        ];
+    }
 
 }
