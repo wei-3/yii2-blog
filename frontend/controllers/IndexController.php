@@ -29,4 +29,9 @@ class IndexController extends Controller{
         $model_ar->save();
         return $this->renderPartial('read',['model_ar'=>$model_ar,'model_de'=>$model_de]);
     }
+
+    public function actionIt(){
+        $models=Article::find()->where(['article_category_id'=>1])->orderBy('created_time DESC')->all();
+        return $this->renderPartial('about',['models'=>$models]);
+    }
 }

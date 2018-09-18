@@ -66,7 +66,7 @@
     <div class="sidebar">
         <div class="search" style="margin-top: 58px">
             <form action="/e/search/index.php" method="post" name="searchform" id="searchform">
-                <input name="keyboard" id="keyboard" class="input_text" value="请输入文章关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入文章关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入关键字'}" type="text">
+                <input name="keyboard" id="keyboard" class="input_text" value="请输入文章关键字" style="color: rgb(153, 153, 153);" onfocus="if(value=='请输入文章关键字'){this.style.color='#000';value=''}" onblur="if(value==''){this.style.color='#999';value='请输入文章关键字'}" type="text">
                 <input name="show" value="title" type="hidden">
                 <input name="tempid" value="1" type="hidden">
                 <input name="tbname" value="news" type="hidden">
@@ -77,7 +77,7 @@
             <h2 class="hometitle"">点击排行</h2>
             <?php foreach ($sort_clicks as $sort_click):?>
             <ul>
-                <li><b style="margin-bottom: 10px">&nbsp;&nbsp;<a href="/download/div/2015-04-10/746.html" target="_blank"><?=$sort_click->title?></a></b></li>
+                <li><b style="margin-bottom: 10px">&nbsp;&nbsp;<a href="<?=\yii\helpers\Url::to(['index/read','id'=>$sort_click->id])?>" ><?=$sort_click->title?></a></b></li>
             </ul>
             <?php endforeach;?>
         </div>
