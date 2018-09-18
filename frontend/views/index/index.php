@@ -32,12 +32,23 @@
 <header>
     <div class="tophead">
         <div class="logo"><a href="/">芒果味的汤圆个人博客</a></div>
+        <div id="mnav">
+            <h2><span class="navicon"></span></h2>
+            <ul>
+                <li><a href="<?=\yii\helpers\Url::to(['index/index'])?>">网站首页</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['index/about'])?>">关于我</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['index/it'])?>">IT</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['index/pt'])?>">摄影</a></li>
+                <li><a href="info.html">生活记录</a></li>
+                <li><a href="gbook.html">留言</a></li>
+            </ul>
+        </div>
         <nav class="topnav" id="topnav">
             <ul>
                 <li><a href="<?=\yii\helpers\Url::to(['index/index'])?>">网站首页</a></li>
                 <li><a href="<?=\yii\helpers\Url::to(['index/about'])?>">关于我</a></li>
-                <li><a href="share.html">IT</a></li>
-                <li><a href="list.html">摄影</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['index/it'])?>">IT</a></li>
+                <li><a href="<?=\yii\helpers\Url::to(['index/pt'])?>">摄影</a></li>
                 <li><a href="info.html">生活记录</a></li>
                 <li><a href="gbook.html">留言</a></li>
             </ul>
@@ -47,13 +58,13 @@
 <article>
     <div class="blogs">
         <?php foreach ($articles as $article): ?>
-        <li>
-            <h3 class="blogtitle" style="height: 40px"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>"><?=$article->title?></a></h3>
-            <div class="bloginfo">
-                <p><?=$article->intro?></p>
-            </div>
-            <div class="autor"><span class="lm"><a href="/" title="<?=$article->categroy->name?>" target="_blank" class="classname"><?=$article->categroy->name?></a></span><span class="dtime"><?=date('Y-m-d',$article->created_time)?></span><span class="viewnum">浏览（<a href="/"><?=$article->click?></a>）</span><span class="readmore"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>">阅读原文</a></span></div>
-        </li>
+            <li>
+                <h3 class="blogtitle" style="height: 40px"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>"><?=$article->title?></a></h3>
+                <div class="bloginfo">
+                    <p><?=$article->intro?></p>
+                </div>
+                <div class="autor"><span class="lm"><a href="/" title="<?=$article->categroy->name?>" target="_blank" class="classname"><?=$article->categroy->name?></a></span><span class="dtime"><?=date('Y-m-d',$article->created_time)?></span><span class="viewnum">浏览（<a href="/"><?=$article->click?></a>）</span><span class="readmore"><a href="<?=\yii\helpers\Url::to(['index/read','id'=>$article->id])?>">阅读原文</a></span></div>
+            </li>
         <?php endforeach;?>
     </div>
     <div style="width: 300px;height:0px;margin-top: -4px;">
@@ -76,9 +87,9 @@
         <div class="paihang">
             <h2 class="hometitle"">点击排行</h2>
             <?php foreach ($sort_clicks as $sort_click):?>
-            <ul>
-                <li><b style="margin-bottom: 10px">&nbsp;&nbsp;<a href="<?=\yii\helpers\Url::to(['index/read','id'=>$sort_click->id])?>" ><?=$sort_click->title?></a></b></li>
-            </ul>
+                <ul>
+                    <li><b style="margin-bottom: 10px">&nbsp;&nbsp;<a href="<?=\yii\helpers\Url::to(['index/read','id'=>$sort_click->id])?>" ><?=$sort_click->title?></a></b></li>
+                </ul>
             <?php endforeach;?>
         </div>
         <div class="cloud">

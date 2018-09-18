@@ -13,7 +13,7 @@ class IndexController extends Controller{
         $query=Article::find();
         $pager=new Pagination();
         $pager->totalCount = $query->count();
-        $pager->defaultPageSize = 10;
+        $pager->defaultPageSize = 9;
         $aritcles=$query->where(['status'=>1])->orderBy('created_time desc')->offset($pager->offset)->limit($pager->limit)->all();
         return $this->renderPartial('index',['articles'=>$aritcles,'sort_clicks'=>$sort_clicks,'pager'=>$pager]);
     }
@@ -31,7 +31,25 @@ class IndexController extends Controller{
     }
 
     public function actionIt(){
-        $models=Article::find()->where(['article_category_id'=>1])->orderBy('created_time DESC')->all();
-        return $this->renderPartial('about',['models'=>$models]);
+        $query= $query=Article::find();
+        //点击
+        $sort_clicks=$query->where(['status'=>1])->orderBy('click DESC')->limit(10)->all();
+        //文章
+        $pager=new Pagination();
+        $pager->totalCount = $query->count();
+        $pager->defaultPageSize = 10;
+        $models=$query->where(['article_category_id'=>1])->orderBy('created_time DESC')->offset($pager->offset)->limit($pager->limit)->all();
+        return $this->renderPartial('it',['models'=>$models,'sort_clicks'=>$sort_clicks,'pager'=>$pager]);
+    }
+    public function actionPt(){
+        $query= $query=Article::find();
+        //点击
+        $sort_clicks=$query->where(['status'=>1])->orderBy('click DESC')->limit(10)->all();
+        //文章
+        $pager=new Pagination();
+        $pager->totalCount = $query->count();
+        $pager->defaultPageSize = 9;
+        $models=$query->where(['article_category_id'=>2])->orderBy('created_time DESC')->offset($pager->offset)->limit($pager->limit)->all();
+        return $this->renderPartial('it',['models'=>$models,'sort_clicks'=>$sort_clicks,'pager'=>$pager]);
     }
 }
